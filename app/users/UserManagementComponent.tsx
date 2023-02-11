@@ -6,7 +6,7 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
 
 export default function UserManagementComponent() {
-	const [userDatas, setUserDatas] = useState({ count: 0, results: [] });
+	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
 	const [userDeleting, setUserDeleting] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [modal, setModal] = useState({ name: '', id: '' });
@@ -115,7 +115,7 @@ export default function UserManagementComponent() {
 								value={selected}
 								className="bg-[#94D60A] rounded-md outline-none text-white p-[2px] mt-[3px] cursor-pointer"
 								onChange={(e) => {
-									setSelected(e.target.value);
+									setSelected(parseInt(e.target.value));
 									{
 										waktuData == 'baru'
 											? setTimeout(() => {
@@ -224,7 +224,7 @@ export default function UserManagementComponent() {
 							</tr>
 						</thead>
 						<tbody className="">
-							{userDatas['results'].map((datas: any, key) => {
+							{userDatas['results'].map((datas: any, key: any) => {
 								return (
 									<tr key={key}>
 										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">

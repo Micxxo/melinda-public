@@ -118,7 +118,7 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
 
 export default function UserManagementComponent() {
-	const [userDatas, setUserDatas] = useState({ count: 0, results: [] });
+	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
 	// const [userDatas, setUserDatas] = useState({ [] });
 
 	const [userDeleting, setUserDeleting] = useState('');
@@ -127,7 +127,7 @@ export default function UserManagementComponent() {
 	const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
 
-	const getuserDatas = async (uri) => {
+	const getuserDatas = async (uri: any) => {
 		if (!uri) return;
 
 		setLoading(true);
@@ -138,7 +138,7 @@ export default function UserManagementComponent() {
 		setUserDatas(res.data);
 	};
 
-	const deleteUser = async (id) => {
+	const deleteUser = async (id: any) => {
 		const res = await axios.delete(
 			`https://fadhli.pythonanywhere.com/user/${id}/delete/`
 		);
@@ -157,7 +157,7 @@ export default function UserManagementComponent() {
 
 	const [jmlData, setJmlData] = useState(5);
 
-	const searchUserSubmit = (e) => {
+	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
 		getuserDatas(
 			`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&search=${searchUser}`
@@ -338,7 +338,7 @@ export default function UserManagementComponent() {
 							</tr>
 						</thead>
 						<tbody className="">
-							{userDatas['results'].map((datas, key) => {
+							{userDatas['results'].map((datas: any, key: any) => {
 								return (
 									<tr key={key}>
 										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
