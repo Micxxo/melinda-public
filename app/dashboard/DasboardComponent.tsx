@@ -58,12 +58,12 @@ export default function DasboardComponent() {
 
 	return (
 		<div className="md:pr-5 pr-0 pb-8">
-			<div className="header ml-0 md:ml-10 lg:ml-72 mt-6 flex justify-between items-center pr-10">
+			<div className="header ml-0 md:ml-10 lg:ml-72 mt-6 md:flex block justify-between items-center pr-10">
 				<h1 className="text-[#94D60A] lg:text-3xl font-bold text-lg md:text-xl px-5 lg:px-0">
 					Dashboard
 				</h1>
-				<div className="waktu flex items-center gap-10">
-					<div className="btn-group grid grid-cols-4 md:w-52 w-28 pt-1">
+				<div className="waktu block md:flex items-center gap-10">
+					<div className="btn-group grid grid-cols-4 md:w-52 w-10/12 pt-1 mx-auto mt-3 md:mt-0 ">
 						<button
 							className={`border-[#94D60A] text-white border-2 btn btn-outline  rounded-tl-md rounded-bl-md border-r-0 ${
 								warna == 'baru' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
@@ -97,21 +97,21 @@ export default function DasboardComponent() {
 							1 tahun
 						</button>
 					</div>
-					<div className="input">
+					<div className="input mx-auto w-10/12 mt-3 md:mt-0">
 						<input
 							type="date"
 							placeholder="p"
-							className="bg-[#F8FFE9] text-[#94D60A] border-[#94D60A] border-2 rounded-md p-[1px] md:text-sm mt-1 px-2 |pr-5 text-sm border-r-0 rounded-tr-none rounded-br-none w-24 lg:w-auto"
+							className="bg-[#F8FFE9] text-[#94D60A] border-[#94D60A] border-2 rounded-md p-[1px] md:text-sm mt-1 px-2 |pr-5 text-sm border-r-0 rounded-tr-none rounded-br-none w-auto"
 						/>
 						<input
 							type="date"
 							placeholder="p"
-							className="bg-[#F8FFE9] text-[#94D60A] border-[#94D60A] border-2 rounded-md p-[1px] md:text-sm mt-1 px-2 |pr-5 text-sm border-l-0 rounded-tl-none rounded-bl-none w-24 lg:w-auto"
+							className="bg-[#F8FFE9] text-[#94D60A] border-[#94D60A] border-2 rounded-md p-[1px] md:text-sm mt-1 px-2 |pr-5 text-sm border-l-0 rounded-tl-none rounded-bl-none w-auto"
 						/>
 					</div>
 				</div>
 			</div>
-			<div className="card block md:flex md:ml-10 lg:ml-72 m-5 items-center justify-between pr-10 mt-5 ">
+			<div className="card block md:flex md:ml-10 lg:ml-72 m-5 items-center justify-between pr-10 mt-5 w-10/12 md:w-auto mx-auto">
 				<div className="totalMinyak shadow-md mt-5 lg:mt-0 bg-[#94D60A] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer ">
 					<GiOilDrum className="mx-auto block text-lg" />
 					<h1 className="text-xl font-bold mt-2">
@@ -153,8 +153,8 @@ export default function DasboardComponent() {
 					<p className=" text-xs">Verifikasi Baru</p>
 				</div>
 			</div>
-			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 md:w-auto w-full min-h-full shadow-md flex justify-around items-center bg-[#F8FFE9] px-5">
-				<div className="BarChart w-2/3">
+			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 md:w-auto w-full min-h-full shadow-md block md:flex justify-around items-center bg-[#F8FFE9] px-5">
+				<div className="BarChart w-full md:w-2/3 ">
 					<Bar height={400} data={data} options={option} />
 				</div>
 				<div className="DoughChartWrap">
@@ -171,7 +171,7 @@ export default function DasboardComponent() {
 							<div className="info bg-[#EB5757] w-[5px] h-[5px] p-2"></div>
 							<p>User Baru</p>
 						</div>
-						<div className="DoughChart w-48">
+						<div className="DoughChart w-10/12 md:w-28 mx-auto ">
 							<Doughnut height={400} data={data} options={option} />
 						</div>
 					</div>

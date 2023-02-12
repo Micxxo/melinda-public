@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import axios from 'axios';
+import Link from 'next/link';
 
 export default function LoginComponent() {
 	const [showPass, setShowPass] = useState(false);
@@ -49,6 +50,11 @@ export default function LoginComponent() {
 					<p> Please Enter Email/Password !</p>
 				</div>
 			)}
+			<p className="text-sm text-red-500 absolute top-10 z-20 border-red-500 border-2 p-1 rounded-md">
+				<Link rel="stylesheet" href="/dashboard">
+					Skip
+				</Link>
+			</p>
 			<div className="card bg-white md:w-auto w-80 md:h-auto h-[300px] mx-auto flex items-center shadow-lg rounded-md">
 				{/* LOGIN INPUT */}
 				<div className="login-form pt-0 px-6 w-[300px]">

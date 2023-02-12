@@ -11,7 +11,8 @@ export default function UserManagementComponent() {
 	const [modal, setModal] = useState('');
 	const [searchUser, setSearch] = useState('');
 	const [inputVolume, setInputVolume] = useState('');
-	const [berhasilVerif, setBerhasilVerif] = useState(false);
+	const [berhasilVerif, setBerhasilVerif] = useState('');
+	const [gagalVerif, setGagalVerif] = useState('');
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
@@ -55,19 +56,29 @@ export default function UserManagementComponent() {
 
 		if (modal == '') return;
 
-		// const res = await axios.post(
-		// 	`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
-		// 	{ volume: inputVolume }
-		// );
-		setBerhasilVerif(!berhasilVerif);
+		const res = await axios.post(
+			`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
+			{ volume: inputVolume }
+		);
+		// setBerhasilVerif(!berhasilVerif);
 		getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
 		setModal('fake');
 	};
 
 	console.log(berhasilVerif);
 
+	// const verifGagal = (e: any) => {
+	// 	if (e == 0) {
+	// 		setGagalVerif(!gagalVerif);
+	// 	} else if (e > 0) {
+	// 		setGagalVerif(false);
+	// 	}
+	// };
+
+	console.log(gagalVerif);
+
 	return (
-		<div className="pr-0 md:pr-5 z-0 pb-10 overflow-auto">
+		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL BERHASIL VERIF */}
 			<div
 				className={`berhasilVerif fixed ${
@@ -78,10 +89,25 @@ export default function UserManagementComponent() {
 					<h1 className="text-[#94D60A] text-3xl">Verfikasi berhasil</h1>
 					<AiOutlineClose
 						className="absolute top-3 right-2 text-[#94D60A] text-xl cursor-pointer"
-						onClick={(e) => setBerhasilVerif(false)}
+						onClick={(e) => setBerhasilVerif('')}
 					/>
 				</div>
 			</div>
+
+			{/* MODAL GAGAL VERIF */}
+			{/* <div
+				className={`berhasilVerif fixed ${
+					gagalVerif ? 'hidden' : ''
+				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
+			>
+				<div className="bg-[#F8FFE9] border-[red] border-2 rounded py-10 pl-8 pr-8 relative">
+					<h1 className="text-[red] text-3xl">Verfikasi Gagal</h1>
+					<AiOutlineClose
+						className="absolute top-3 right-2 text-[red] text-xl cursor-pointer"
+						onClick={(e) => setGagalVerif('')}
+					/>
+				</div>
+			</div> */}
 
 			{/* MODAL  */}
 			<div
@@ -104,6 +130,7 @@ export default function UserManagementComponent() {
 					<p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
 						Verifikasi dengan memasukan{' '}
 						<span className="text-[red]">inputan minyak </span> di bawah ini
+						dalam satuan <span className="text-[red]">ml</span>
 					</p>
 					<h1 className="text-[#00000080] mt-2 w-2/3 text-xl block mx-auto">
 						Masukan Minyak
@@ -116,8 +143,8 @@ export default function UserManagementComponent() {
 					>
 						<input
 							type="number"
-							placeholder="Ex: 1200ml"
-							className=" w-full bg-transparent border-[#94D60A] text-[#00000080] rounded-lg border-2 w-2/3 block mx-auto pl-2 "
+							placeholder="Ex: 1200"
+							className=" bg-transparent border-[#94D60A] text-[#00000080] rounded-lg border-2 w-2/3 block mx-auto pl-2 "
 							value={inputVolume}
 							onChange={(e) => {
 								setInputVolume(e.target.value);
@@ -125,10 +152,13 @@ export default function UserManagementComponent() {
 						/>
 
 						<button
-							className="bg-[#94D60A] w-full rounded-md text-white mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl"
+							className="bg-[#94D60A] rounded-md text-white mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl"
 							// type="submit"
 							// onClick={(e) => verifyUser(datas.id)}
-							onClick={(e) => setModal('click	')}
+							onClick={(e) => {
+								// setGagalVerif(inputVolume),
+								setBerhasilVerif(inputVolume), setModal('');
+							}}
 						>
 							Masukan
 						</button>
@@ -240,59 +270,63 @@ export default function UserManagementComponent() {
 				</div>
 
 				{/* <TableUser /> */}
-				<div className="w-full px-5 overflow-auto">
-					<div className="btn-group grid grid-cols-2"></div>
-					<table className="w-full">
-						<thead className="bg-[#94D60A] rounded text-white">
-							<tr>
-								<td className="rounded-bl-lg rounded-tl-lg bg-[#94D60A] p-1 pl-3">
-									Nama
-								</td>
-								<td>NIU</td>
-								<td>Email</td>
-								<td>No.Tlp</td>
-								<td
-									className="rounded-tr-lg rounded-br-lg bg-[#94D60A] pr-2"
-									onClick={modalTrigger}
-								>
-									Aksi
-								</td>
-							</tr>
-						</thead>
-						<tbody className="">
-							{userDatas['results'].map((datas: any, key: any) => {
-								return (
-									<tr key={key}>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.user}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.id_user}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.email}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.phone}
-										</td>
-										<td
-											className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
-											onClick={(e) => modalTrigger(datas.id)}
-										>
-											<div className="p-1 border-2 border-[#94D60A] text-[#94D60A]  rounded text-center">
-												Verifikasi
-											</div>
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
+				<div className="w-full px-5">
+					<div className="overflow-auto">
+						<div className="btn-group grid grid-cols-2"></div>
+						<table className="w-full">
+							<thead className="bg-[#94D60A] rounded text-white">
+								<tr>
+									<td className="rounded-bl-lg rounded-tl-lg bg-[#94D60A] p-1 pl-3">
+										Nama
+									</td>
+									<td>NIU</td>
+									<td>Email</td>
+									<td>No.Tlp</td>
+									<td
+										className="rounded-tr-lg rounded-br-lg bg-[#94D60A] pr-2"
+										onClick={modalTrigger}
+									>
+										Aksi
+									</td>
+								</tr>
+							</thead>
+							<tbody className="">
+								{userDatas['results'].map((datas: any, key: any) => {
+									return (
+										<tr key={key}>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.user}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.id_user}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.email}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.phone}
+											</td>
+											<td
+												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
+												onClick={(e) => modalTrigger(datas.id)}
+											>
+												<div className="p-1 border-2 border-[#94D60A] text-[#94D60A]  rounded text-center">
+													Verifikasi
+												</div>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
 
 					<div className="footer flex justify-between mt-5 pb-5 p-1 items-center">
-						<h1 className="font-semibold">
-							{/* Showing {selected} to {userDatas.count} */}
+						<h1 className="font-semibold text-xs md:text-lg">
 							Showing {selected} data
+						</h1>
+						<h1 className="font-semibold text-xs md:text-lg">
+							Total data: {userDatas.count}
 						</h1>
 						<div className="btn-group border-[#94D60A] border-2 md:w-44 w-32 justify-between rounded-lg flex">
 							<button
@@ -303,8 +337,8 @@ export default function UserManagementComponent() {
 									Previous
 								</p>
 							</button>
-							<button className="btn bg-[#94D60A] p-1 rounded rounded-tl-none rounded-tr-none rounded-br-none rounded-bl-none text-white text-sm">
-								Page 1
+							<button className="btn bg-[#94D60A] text-[#94D60A] p-1 rounded rounded-tl-none rounded-tr-none rounded-br-none rounded-bl-none text-sm">
+								|
 							</button>
 							<button
 								className="btn"

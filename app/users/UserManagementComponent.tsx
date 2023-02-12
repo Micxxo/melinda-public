@@ -20,20 +20,19 @@ export default function UserManagementComponent() {
 		setCurrentPage(uri);
 		const res = await axios.get(uri);
 		setLoading(false);
-
 		setUserDatas(res.data);
 	};
 
 	const deleteUser = async (id: any) => {
 		const res = await axios.delete(
-			`https://fadhli.pythonanywhere.com/user/${id}/delete/`
+			`https://fadhli.pythonanywhere.com/users/${id}/delete/`
 		);
 		setModal({ name: '', id: '' });
-		getuserDatas('https://fadhli.pythonanywhere.com/user/?limit=5&page=1');
+		getuserDatas('https://fadhli.pythonanywhere.com/users/?limit=5&page=1');
 	};
 
 	useEffect(() => {
-		getuserDatas('https://fadhli.pythonanywhere.com/user/?limit=5&page=1');
+		getuserDatas('https://fadhli.pythonanywhere.com/users/?limit=5&page=1');
 	}, []);
 
 	const [selected, setSelected] = useState(5);
@@ -45,7 +44,7 @@ export default function UserManagementComponent() {
 	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
 		getuserDatas(
-			`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&search=${searchUser}`
+			`https://fadhli.pythonanywhere.com/users/?ordering=createdAt&search=${searchUser}`
 		);
 	};
 
@@ -56,7 +55,7 @@ export default function UserManagementComponent() {
 	// console.log(noPage);
 
 	return (
-		<div className="pr-0 md:pr-5 z-0 pb-10 overflow-auto">
+		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL  */}
 			<div
 				className={` modal fixed ${
@@ -120,12 +119,12 @@ export default function UserManagementComponent() {
 										waktuData == 'baru'
 											? setTimeout(() => {
 													getuserDatas(
-														`https://fadhli.pythonanywhere.com/user/?limit=${e.target.value}`
+														`https://fadhli.pythonanywhere.com/users/?limit=${e.target.value}`
 													);
 											  }, 100)
 											: setTimeout(() => {
 													getuserDatas(
-														`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&limit=${e.target.value}`
+														`https://fadhli.pythonanywhere.com/users/?ordering=createdAt&limit=${e.target.value}`
 													);
 											  }, 100);
 									}
@@ -161,7 +160,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('baru'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/user/?limit=5&page=1'
+											'https://fadhli.pythonanywhere.com/users/?limit=5&page=1'
 										);
 								}}
 							>
@@ -176,7 +175,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/user/?ordering=createdAt'
+											'https://fadhli.pythonanywhere.com/users/?ordering=createdAt'
 										);
 								}}
 							>
@@ -204,66 +203,69 @@ export default function UserManagementComponent() {
 				</div>
 
 				{/* <TableUser /> */}
-				<div className="w-full px-5 overflow-auto">
-					<div className="btn-group grid grid-cols-2"></div>
-					<table className="w-full">
-						<thead className="bg-[#94D60A] rounded text-white">
-							<tr>
-								<td className="rounded-bl-lg rounded-tl-lg bg-[#94D60A] p-1 pl-3">
-									Nama
-								</td>
-								<td>NIU</td>
-								<td>Email</td>
-								<td>No.Tlp</td>
-								<td
-									className="rounded-tr-lg rounded-br-lg bg-[#94D60A] pr-2"
-									// onClick={modalTrigger}
-								>
-									Aksi
-								</td>
-							</tr>
-						</thead>
-						<tbody className="">
-							{userDatas['results'].map((datas: any, key: any) => {
-								return (
-									<tr key={key}>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.name}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.id}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.email}
-										</td>
-										<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-											{datas.phone}
-										</td>
-										<td
-											className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
-											onClick={(e) =>
-												setModal({ name: datas.name, id: datas.id })
-											}
-										>
-											<div
-												// onClick={(e) => deleteUser(datas.id)}
-												className="p-1 border-2 border-[red] text-[red]  rounded text-center"
+				<div className="w-full px-5">
+					<div className="overflow-auto">
+						<div className="btn-group grid grid-cols-2"></div>
+						<table className="w-full">
+							<thead className="bg-[#94D60A] rounded text-white">
+								<tr>
+									<td className="rounded-bl-lg rounded-tl-lg bg-[#94D60A] p-1 pl-3">
+										Nama
+									</td>
+									<td>NIU</td>
+									<td>Email</td>
+									<td>No.Tlp</td>
+									<td
+										className="rounded-tr-lg rounded-br-lg bg-[#94D60A] pr-2"
+										// onClick={modalTrigger}
+									>
+										Aksi
+									</td>
+								</tr>
+							</thead>
+							<tbody className="">
+								{userDatas['results'].map((datas: any, key: any) => {
+									return (
+										<tr key={key}>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.name}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.id}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.email}
+											</td>
+											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+												{datas.phone}
+											</td>
+											<td
+												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
+												onClick={(e) =>
+													setModal({ name: datas.name, id: datas.id })
+												}
 											>
-												Hapus
-											</div>
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-
-					<div className="footer flex justify-between mt-5 pb-5 p-1 items-center">
-						<h1 className="font-semibold">
-							{/* Showing {selected} to {userDatas.count} */}
+												<div
+													// onClick={(e) => deleteUser(datas.id)}
+													className="p-1 border-2 border-[red] text-[red]  rounded text-center"
+												>
+													Hapus
+												</div>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
+					<div className="footer flex justify-between mt-5 pb-5 p-1 items-center overflow-hidden">
+						<h1 className="font-semibold text-sm md:text-lg">
 							Showing {selected} data
 						</h1>
-						<div className="btn-group border-[#94D60A] border-2 md:w-44 w-32 justify-between rounded-lg flex">
+						<h1 className="font-semibold text-sm md:text-lg">
+							Total data: {userDatas.count}
+						</h1>
+						<div className="btn-group border-[#94D60A] border-2 md:w-44 w-32 justify-around rounded-lg flex">
 							<button
 								className="btn"
 								onClick={(e) => getuserDatas(userDatas.previous)}
@@ -272,8 +274,8 @@ export default function UserManagementComponent() {
 									Previous
 								</p>
 							</button>
-							<button className="btn bg-[#94D60A] p-1 rounded rounded-tl-none rounded-tr-none rounded-br-none rounded-bl-none text-white text-sm">
-								Page 1
+							<button className="btn bg-[#94D60A] text-[#94D60A] p-1 rounded rounded-tl-none rounded-tr-none rounded-br-none rounded-bl-none  text-sm">
+								|
 							</button>
 							<button
 								className="btn"
