@@ -39,7 +39,7 @@ export default function LoginComponent() {
 				password,
 			});
 			if (res.status == 200) {
-				cekAuth('berhasil login');
+				cekAuth('berhasil');
 				const cookkie = new Cookies();
 				cookkie.set('jwt', res.data.jwt, {
 					path: '/',
@@ -56,12 +56,21 @@ export default function LoginComponent() {
 		<div className="bg-[#94D60A] h-screen flex justify-center items-center z-10">
 			<div className="absolute z-30 h-screen w-56 bg-[#94D60A] left-0 hidden lg:block"></div>
 			<div className="absolute z-30 w-screen h-14 bg-[#94D60A] top-0 block lg:hidden"></div>
+
 			<div
 				className={`${
 					auth == 'gagal' ? '' : 'hidden'
 				} absolute top-10 bg-[#E5083C] text-sm text-white p-2 rounded flex items-center gap-2 `}
 			>
 				<p>Username atau Password salah !</p>
+			</div>
+
+			<div
+				className={`${
+					auth == 'berhasil' ? '' : 'hidden'
+				} absolute top-10 bg-[#F8FFE9] text-sm text-[#94D60A] p-2 rounded flex items-center gap-2 `}
+			>
+				<p>Login Berhasil !</p>
 			</div>
 			<p
 				className={` hidden text-sm text-red-500 absolute top-10 z-20 border-red-500 border-2 p-1 rounded-md`}
@@ -106,9 +115,9 @@ export default function LoginComponent() {
 						<div className="pass relative mt-4">
 							<label htmlFor="password" onClick={ShowPass} className="z-20">
 								{showPass ? (
-									<AiFillEyeInvisible className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer z-20" />
+									<AiFillEyeInvisible className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer" />
 								) : (
-									<AiFillEye className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer z-20" />
+									<AiFillEye className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer" />
 								)}
 							</label>
 							<input

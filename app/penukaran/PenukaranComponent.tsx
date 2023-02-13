@@ -14,19 +14,23 @@ export default function UserManagementComponent() {
 	const [modal, setModal] = useState({ name: '', id: '' });
 	const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
+	const [error, setError] = useState('');
 
 	const getuserDatas = async (uri: any) => {
-		if (!uri) return;
-
-		setLoading(true);
-		setCurrentPage(uri);
-		const res = await axios.get(uri);
-		setLoading(false);
-
-		setUserDatas(res.data);
+		try {
+			if (!uri) return;
+			setLoading(true);
+			setCurrentPage(uri);
+			const res = await axios.get(uri);
+			setLoading(false);
+			setUserDatas(res.data);
+			setError('berhasil');
+		} catch (error) {
+			setError('error');
+		}
 	};
 
-	const deleteUser = async (id: any) => {
+	const verifyPenukaran = async (id: any) => {
 		const res = await axios.delete(
 			`https://fadhli.pythonanywhere.com/user/${id}/delete/`
 		);
@@ -81,11 +85,18 @@ export default function UserManagementComponent() {
 					</button> */}
 				</div>
 			</div>
-
+			{/* MODAL END  */}
+			<h1
+				className={`${
+					error == 'error' ? '' : 'hidden'
+				} border-[red] text-[red] border-2 p-1 absolute right-28 top-10 rounded-md`}
+			>
+				Something Went Wrong
+			</h1>
+			;
 			<h1 className="text-[#94D60A] pl-2 md:pl-10 lg:pl-72 pt-6 font-bold text-2xl">
 				Penukaran
 			</h1>
-
 			{/* {loading ? (
 				<h1 className="ml-72 bg-orange-500 w-32 text-center p-2 text-white rounded">
 					Loading...
@@ -93,7 +104,6 @@ export default function UserManagementComponent() {
 			) : (
 				''
 			)} */}
-
 			<h1
 				className={`${
 					loading ? 'block' : 'hidden'
@@ -101,7 +111,6 @@ export default function UserManagementComponent() {
 			>
 				Loading...
 			</h1>
-
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
 				<div className="wrapper flex justify-between items-center">
 					<div className=" p-5 flex gap-5 items-center">
