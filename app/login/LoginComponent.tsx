@@ -115,9 +115,9 @@ export default function LoginComponent() {
 						<div className="pass relative mt-4">
 							<label htmlFor="password" onClick={ShowPass} className="z-20">
 								{showPass ? (
-									<AiFillEyeInvisible className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer" />
+									<AiFillEyeInvisible className="text-[#00000059] font-semibold absolute z-20 right-2 top-2 cursor-pointer" />
 								) : (
-									<AiFillEye className="text-[#00000059] font-semibold absolute z-10 right-2 top-2 cursor-pointer" />
+									<AiFillEye className="text-[#00000059] font-semibold absolute z-20 right-2 top-2 cursor-pointer" />
 								)}
 							</label>
 							<input
