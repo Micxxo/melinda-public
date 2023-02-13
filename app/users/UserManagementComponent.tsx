@@ -44,7 +44,8 @@ export default function UserManagementComponent() {
 	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
 		getuserDatas(
-			`https://fadhli.pythonanywhere.com/users/?ordering=createdAt&search=${searchUser}`
+			// `https://fadhli.pythonanywhere.com/users/?ordering=createdAt&search=${searchUser}`
+			`https://fadhli.pythonanywhere.com/users/?page=1&search=${searchUser}`
 		);
 	};
 

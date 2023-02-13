@@ -52,31 +52,21 @@ export default function UserManagementComponent() {
 	};
 
 	const submitVolume = async (e: any) => {
-		e.preventDefault();
-
-		if (modal == '') return;
-
-		const res = await axios.post(
-			`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
-			{ volume: inputVolume }
-		);
-		// setBerhasilVerif(!berhasilVerif);
-		getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
-		setModal('fake');
+		try {
+			e.preventDefault();
+			if (modal == '') return;
+			const res = await axios.post(
+				`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
+				{ volume: inputVolume }
+			);
+			getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
+			setModal('fake');
+		} catch (error) {
+			setGagalVerif('gagal');
+		}
 	};
 
 	console.log(berhasilVerif);
-
-	// const verifGagal = (e: any) => {
-	// 	if (e == 0) {
-	// 		setGagalVerif(!gagalVerif);
-	// 	} else if (e > 0) {
-	// 		setGagalVerif(false);
-	// 	}
-	// };
-
-	console.log(gagalVerif);
-
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL BERHASIL VERIF */}
@@ -95,19 +85,22 @@ export default function UserManagementComponent() {
 			</div>
 
 			{/* MODAL GAGAL VERIF */}
-			{/* <div
+			<div
 				className={`berhasilVerif fixed ${
-					gagalVerif ? 'hidden' : ''
+					gagalVerif == 'gagal' ? '' : 'hidden'
 				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
 			>
 				<div className="bg-[#F8FFE9] border-[red] border-2 rounded py-10 pl-8 pr-8 relative">
 					<h1 className="text-[red] text-3xl">Verfikasi Gagal</h1>
+					<p className="text-[red] text-xs pt-2">
+						Pastikan untuk menginput jml minyak
+					</p>
 					<AiOutlineClose
 						className="absolute top-3 right-2 text-[red] text-xl cursor-pointer"
 						onClick={(e) => setGagalVerif('')}
 					/>
 				</div>
-			</div> */}
+			</div>
 
 			{/* MODAL  */}
 			<div
@@ -157,7 +150,7 @@ export default function UserManagementComponent() {
 							// onClick={(e) => verifyUser(datas.id)}
 							onClick={(e) => {
 								// setGagalVerif(inputVolume),
-								setBerhasilVerif(inputVolume), setModal('');
+								setBerhasilVerif(inputVolume);
 							}}
 						>
 							Masukan

@@ -47,7 +47,7 @@ export default function UserManagementComponent() {
 				Transaksi
 			</h1>
 
-			<div className="waktu ml-2 md:ml-10 lg:ml-72 my-2">
+			<div className="waktu ml-2 md:ml-10 lg:ml-72 my-2 overflow-auto">
 				<form action="">
 					<table>
 						<thead>
