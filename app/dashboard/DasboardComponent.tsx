@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GiOilDrum } from 'react-icons/gi';
 import { HiUserGroup } from 'react-icons/hi2';
 import { FaUserPlus } from 'react-icons/fa';
@@ -14,10 +14,13 @@ import {
 	Legend,
 } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
+import cookies from 'universal-cookie';
+import { useRouter } from 'next/navigation';
 
 Chartjs.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
 export default function DasboardComponent() {
+	const router = useRouter();
 	const [warna, setWarna] = useState('baru');
 
 	var data = {
@@ -55,6 +58,21 @@ export default function DasboardComponent() {
 			},
 		},
 	};
+
+	const checkAuth = () => {
+		const cookie = new cookies();
+		const getCookie = cookie.get('jwt');
+		if (!getCookie) {
+			console.log('Lom Login');
+			router.push('/');
+		} else {
+			console.log('sudah login');
+		}
+	};
+
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
 	return (
 		<div className="md:pr-5 pr-0 pb-8">
