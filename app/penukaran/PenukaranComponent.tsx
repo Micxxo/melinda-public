@@ -35,11 +35,15 @@ export default function UserManagementComponent() {
 			`https://fadhli.pythonanywhere.com/user/${id}/delete/`
 		);
 		setModal({ name: '', id: '' });
-		getuserDatas('https://fadhli.pythonanywhere.com/user/?limit=5&page=1');
+		getuserDatas(
+			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+		);
 	};
 
 	useEffect(() => {
-		getuserDatas('https://fadhli.pythonanywhere.com/user/?limit=5&page=1');
+		getuserDatas(
+			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+		);
 		// getuserDatas('https://fourtour.site/melinda/produk/0');
 	}, []);
 
@@ -52,7 +56,7 @@ export default function UserManagementComponent() {
 	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
 		getuserDatas(
-			`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&search=${searchUser}`
+			`https://fourtour.site/melinda/produk/penukaran?page=1${searchUser}`
 		);
 	};
 
@@ -169,8 +173,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('baru'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/user/?limit=5&page=1'
-											// `https://fourtour.site/melinda/produk/0`
+											`https://fourtour.site/melinda/produk/penukaran?limit=5&page=1`
 										);
 								}}
 							>
@@ -185,8 +188,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/user/?ordering=createdAt'
-											// `https://fourtour.site/melinda/produk/0`
+											`https://fourtour.site/melinda/produk/penukaran?limit=5&page=1`
 										);
 								}}
 							>

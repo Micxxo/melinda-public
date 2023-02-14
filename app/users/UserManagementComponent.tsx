@@ -4,6 +4,7 @@ import { Tab, Listbox, Transition } from '@headlessui/react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function UserManagementComponent() {
 	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
@@ -12,23 +13,34 @@ export default function UserManagementComponent() {
 	const [modal, setModal] = useState({ name: '', id: '' });
 	const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
+	const [error, setError] = useState('');
+	const router = useRouter();
 
 	const getuserDatas = async (uri: string) => {
-		if (!uri) return;
-
-		setLoading(true);
-		setCurrentPage(uri);
-		const res = await axios.get(uri);
-		setLoading(false);
-		setUserDatas(res.data);
+		try {
+			if (!uri) return;
+			setLoading(true);
+			setCurrentPage(uri);
+			const res = await axios.get(uri);
+			setLoading(false);
+			setUserDatas(res.data);
+		} catch (error) {
+			setError('error');
+		}
 	};
+	console.log(error);
 
 	const deleteUser = async (id: any) => {
-		const res = await axios.delete(
-			`https://fadhli.pythonanywhere.com/users/${id}/delete/`
-		);
-		setModal({ name: '', id: '' });
-		getuserDatas('https://fadhli.pythonanywhere.com/users/?limit=5&page=1');
+		try {
+			const res = await axios.delete(
+				`https://fadhli.pythonanywhere.com/users/${id}/delete/`
+			);
+			setModal({ name: '', id: '' });
+			getuserDatas('https://fadhli.pythonanywhere.com/users/?limit=5&page=1');
+			router.refresh();
+		} catch (error) {
+			setError('error');
+		}
 	};
 
 	useEffect(() => {
@@ -48,12 +60,6 @@ export default function UserManagementComponent() {
 			`https://fadhli.pythonanywhere.com/users/?page=1&search=${searchUser}`
 		);
 	};
-
-	// let noPage = 1;
-	// const setPaging = () => {
-	// 	noPage + 1;
-	// };
-	// console.log(noPage);
 
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
@@ -75,12 +81,14 @@ export default function UserManagementComponent() {
 						Apakah kamu yakin akan menghapus
 						<span className=" text-[#94D60A]"> {modal.name}</span>
 					</p>
-					<button
-						className="bg-[#94D60A] w-full rounded-md text-white mt-10"
-						onClick={(e) => deleteUser(modal.id)}
-					>
-						Iya
-					</button>
+					<form action="">
+						<button
+							className="bg-[#94D60A] w-full rounded-md text-white mt-10"
+							onClick={(e) => deleteUser(modal.id)}
+						>
+							Iya
+						</button>
+					</form>
 				</div>
 			</div>
 

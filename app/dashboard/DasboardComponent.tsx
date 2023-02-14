@@ -16,6 +16,7 @@ import {
 import { Bar, Doughnut } from 'react-chartjs-2';
 import cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 Chartjs.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
@@ -40,11 +41,27 @@ export default function DasboardComponent() {
 		],
 		datasets: [
 			{
-				label: '# of Votes',
+				label: 'Jumlah Minyak',
 				data: [
 					80, 100, 130, 150, 200, 500, 800, 700, 600, 950, 900, 1200, 1800,
 				],
-				backgroundColor: ['red', 'blue', 'green', 'purple', 'black', 'orange'],
+				backgroundColor: ['#94D60A'],
+				borderWidth: 1,
+			},
+			{
+				label: 'Jumlah Transaksi',
+				data: [
+					80, 100, 130, 150, 200, 500, 800, 700, 600, 950, 900, 1200, 1800,
+				],
+				backgroundColor: ['#EB5757'],
+				borderWidth: 1,
+			},
+			{
+				label: 'User Baru',
+				data: [
+					80, 100, 130, 150, 200, 500, 800, 700, 600, 950, 900, 1200, 1800,
+				],
+				backgroundColor: ['#2F80ED'],
 				borderWidth: 1,
 			},
 		],
@@ -189,7 +206,7 @@ export default function DasboardComponent() {
 							<div className="info bg-[#EB5757] w-[5px] h-[5px] p-2"></div>
 							<p>User Baru</p>
 						</div>
-						<div className="DoughChart w-10/12 md:w-28 mx-auto ">
+						<div className="DoughChart w-10/12 lg:w-60 md:w-40 mx-auto ">
 							<Doughnut height={400} data={data} options={option} />
 						</div>
 					</div>
