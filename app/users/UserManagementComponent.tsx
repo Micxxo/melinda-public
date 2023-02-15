@@ -83,7 +83,7 @@ export default function UserManagementComponent() {
 					</p>
 					<form action="">
 						<button
-							className="bg-[#94D60A] w-full rounded-md text-white mt-10"
+							className="bg-[#94D60A] w-full rounded-md text-white mt-10 hover:scale-95 duration-200"
 							onClick={(e) => deleteUser(modal.id)}
 						>
 							Iya
@@ -256,7 +256,7 @@ export default function UserManagementComponent() {
 											>
 												<div
 													// onClick={(e) => deleteUser(datas.id)}
-													className="p-1 border-2 border-[red] text-[red]  rounded text-center"
+													className="p-1 border-2 border-[red] text-[red]  rounded text-center hover:scale-95 duration-200"
 												>
 													Hapus
 												</div>
@@ -274,25 +274,23 @@ export default function UserManagementComponent() {
 						<h1 className="font-semibold text-sm md:text-lg">
 							Total data: {userDatas.count}
 						</h1>
-						<div className="btn-group border-[#94D60A] border-2 md:w-44 w-32 justify-around rounded-lg flex">
+						<div className="flex gap-2">
 							<button
-								className="btn"
+								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
-								<p className="text-[#94D60A] pl-1 text-sm md:text-md">
+								<p className="text-[#94D60A] text-sm md:text-md px-3">
 									Previous
 								</p>
 							</button>
-							<button className="btn bg-[#94D60A] text-[#94D60A] p-1 rounded rounded-tl-none rounded-tr-none rounded-br-none rounded-bl-none  text-sm">
-								|
-							</button>
+
 							<button
-								className="btn"
+								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
-								<p className="text-[#94D60A] pr-1 text-sm	">Next</p>
+								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>
