@@ -13,6 +13,9 @@ export default function UserManagementComponent() {
 	const [inputVolume, setInputVolume] = useState('');
 	const [berhasilVerif, setBerhasilVerif] = useState('');
 	const [gagalVerif, setGagalVerif] = useState('');
+	const [selected, setSelected] = useState(5);
+	const [waktuData, setWaktuData] = useState('baru');
+	const [jmlData, setJmlData] = useState(5);
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
@@ -20,29 +23,13 @@ export default function UserManagementComponent() {
 		setUserDatas(res.data);
 	};
 
-	const verifyUser = async (id: any) => {
-		const res = await axios.post(
-			`https://fadhli.pythonanywhere.com/minyak/setor/${id}/verifikasi/`
-		);
-		setModal('');
-		getuserDatas(
-			'https://fadhli.pythonanywhere.com/minyak/setor/?limit=5&page=1'
-		);
-	};
-
 	useEffect(() => {
 		getuserDatas('https://fadhli.pythonanywhere.com/minyak/setor/?page=1');
 	}, []);
 
-	const [selected, setSelected] = useState(5);
-
-	const [waktuData, setWaktuData] = useState('baru');
-
 	const modalTrigger = (id: any) => {
 		setModal(id);
 	};
-
-	const [jmlData, setJmlData] = useState(5);
 
 	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
@@ -55,12 +42,13 @@ export default function UserManagementComponent() {
 		try {
 			e.preventDefault();
 			if (modal == '') return;
+			// setBerhasilVerif('');
+			setModal('');
 			const res = await axios.post(
 				`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
 				{ volume: inputVolume }
 			);
 			getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
-			setModal('fake');
 		} catch (error) {
 			setGagalVerif('gagal');
 		}
