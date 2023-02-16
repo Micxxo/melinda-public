@@ -105,7 +105,7 @@ export default function DasboardComponent() {
 							} text-sm`}
 							onClick={(e) => setWarna('baru')}
 						>
-							Baru
+							Hari ini
 						</button>
 						<button
 							className={`border-[#94D60A] text-white border-2 btn btn-outline  ${

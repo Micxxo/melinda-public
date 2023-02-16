@@ -14,6 +14,8 @@ export default function UserManagementComponent() {
 	const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
 	const [error, setError] = useState('');
+	const nextPage = userDatas.next;
+	const prevPage = userDatas.previous;
 	const router = useRouter();
 
 	const getuserDatas = async (uri: string) => {
@@ -276,7 +278,9 @@ export default function UserManagementComponent() {
 						</h1>
 						<div className="flex gap-2">
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									prevPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">
@@ -285,12 +289,39 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md ${
+									prevPage == null ? '' : 'hidden'
+								}`}
+								onClick={(e) => getuserDatas(userDatas.previous)}
+								disabled
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">
+									Previous
+								</p>
+							</button>
+
+							{/* NEXT PAGE  */}
+							<button
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									nextPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
+							</button>
+
+							<button
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md   ${
+									nextPage == null ? '' : 'hidden'
+								}`}
+								disabled
+								onClick={(e) => {
+									getuserDatas(userDatas.next);
+								}}
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>

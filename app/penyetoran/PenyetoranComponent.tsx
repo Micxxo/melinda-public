@@ -7,15 +7,15 @@ import axios from 'axios';
 
 export default function UserManagementComponent() {
 	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
-	const [userDeleting, setUserDeleting] = useState('');
 	const [modal, setModal] = useState('');
 	const [searchUser, setSearch] = useState('');
 	const [inputVolume, setInputVolume] = useState('');
 	const [berhasilVerif, setBerhasilVerif] = useState('');
-	const [gagalVerif, setGagalVerif] = useState('');
 	const [selected, setSelected] = useState(5);
 	const [waktuData, setWaktuData] = useState('baru');
 	const [jmlData, setJmlData] = useState(5);
+	const nextPage = userDatas.next;
+	const prevPage = userDatas.previous;
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
@@ -50,11 +50,10 @@ export default function UserManagementComponent() {
 			);
 			getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
 		} catch (error) {
-			setGagalVerif('gagal');
+			console.log(error);
 		}
 	};
 
-	console.log(berhasilVerif);
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL BERHASIL VERIF */}
@@ -68,24 +67,6 @@ export default function UserManagementComponent() {
 					<AiOutlineClose
 						className="absolute top-3 right-2 text-[#94D60A] text-xl cursor-pointer"
 						onClick={(e) => setBerhasilVerif('')}
-					/>
-				</div>
-			</div>
-
-			{/* MODAL GAGAL VERIF */}
-			<div
-				className={`berhasilVerif fixed ${
-					gagalVerif == 'gagal' ? '' : 'hidden'
-				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
-			>
-				<div className="bg-[#F8FFE9] border-[red] border-2 rounded py-10 pl-8 pr-8 relative">
-					<h1 className="text-[red] text-3xl">Verfikasi Gagal</h1>
-					<p className="text-[red] text-xs pt-2">
-						Pastikan untuk menginput jml minyak
-					</p>
-					<AiOutlineClose
-						className="absolute top-3 right-2 text-[red] text-xl cursor-pointer"
-						onClick={(e) => setGagalVerif('')}
 					/>
 				</div>
 			</div>
@@ -111,7 +92,7 @@ export default function UserManagementComponent() {
 					<p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
 						Verifikasi dengan memasukan{' '}
 						<span className="text-[red]">inputan minyak </span> di bawah ini
-						dalam satuan <span className="text-[red]">ml</span>
+						dalam satuan <span className="text-[red]">mL</span>
 					</p>
 					<h1 className="text-[#00000080] mt-2 w-2/3 text-xl block mx-auto">
 						Masukan Minyak
@@ -133,7 +114,27 @@ export default function UserManagementComponent() {
 						/>
 
 						<button
-							className="bg-[#94D60A] rounded-md text-white mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl hover:scale-95 duration-200"
+							className={` ${
+								inputVolume != '' && inputVolume != '0'
+									? 'hidden'
+									: 'text-white rounded-md bg-gray-300 mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl focus:outline-none'
+							}  `}
+							disabled
+							// type="submit"
+							// onClick={(e) => verifyUser(datas.id)}
+							onClick={(e) => {
+								// setGagalVerif(inputVolume),
+								setBerhasilVerif(inputVolume);
+							}}
+						>
+							Masukan
+						</button>
+						<button
+							className={` ${
+								inputVolume != '' && inputVolume != '0'
+									? 'bg-[#94D60A] rounded-md text-white mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl hover:scale-95 duration-200 cursor-pointer'
+									: 'hidden'
+							}  `}
 							// type="submit"
 							// onClick={(e) => verifyUser(datas.id)}
 							onClick={(e) => {
@@ -310,8 +311,11 @@ export default function UserManagementComponent() {
 							Total data: {userDatas.count}
 						</h1>
 						<div className="flex gap-2">
+							{/* PREV PAGE  */}
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									prevPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">
@@ -320,12 +324,39 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md ${
+									prevPage == null ? '' : 'hidden'
+								}`}
+								onClick={(e) => getuserDatas(userDatas.previous)}
+								disabled
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">
+									Previous
+								</p>
+							</button>
+
+							{/* NEXT PAGE  */}
+							<button
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									nextPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
+							</button>
+
+							<button
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md   ${
+									nextPage == null ? '' : 'hidden'
+								}`}
+								disabled
+								onClick={(e) => {
+									getuserDatas(userDatas.next);
+								}}
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>

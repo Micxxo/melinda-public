@@ -25,7 +25,11 @@ export default function SideNavbar() {
 
 	return (
 		<div>
-			<nav className="z-10 relative">
+			<nav
+				className={`z-10 relative ${
+					router == '/' || router == '/login' ? 'hidden' : ''
+				}`}
+			>
 				<div>
 					{nav ? (
 						<HiMenuAlt3

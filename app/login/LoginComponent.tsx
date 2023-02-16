@@ -5,7 +5,11 @@ import { useForm } from 'react-hook-form';
 import Logologin from '../../public/Logo-Login.jpeg';
 import Image from 'next/image';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import {
+	AiFillEyeInvisible,
+	AiFillEye,
+	AiOutlineCloseCircle,
+} from 'react-icons/ai';
 import axios from 'axios';
 import Link from 'next/link';
 // import cookiecutter from 'cookie-cutter';
@@ -18,6 +22,7 @@ export default function LoginComponent() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [auth, cekAuth] = useState('');
+	const [inputValue, setInputValue] = useState('');
 
 	const router = useRouter();
 
@@ -38,31 +43,64 @@ export default function LoginComponent() {
 				email,
 				password,
 			});
-			if (res.status == 200) {
+			if (email == 'admin@gmail.com' && password == 'qwer') {
 				cekAuth('berhasil');
 				const cookkie = new Cookies();
 				cookkie.set('jwt', res.data.jwt, {
 					path: '/',
 				});
-
 				router.push('/dashboard');
+			} else {
+				cekAuth('gagal');
 			}
+			// if (res.status == 200) {
+
+			// }
+			// if (inputValue == '') {
+			// 	console.log('gagal masseh');
+			// }
 		} catch (errors) {
 			cekAuth('gagal');
 		}
 	};
 
+	// const checkValue = (e:any) => {
+	// 	e.preventDefault()
+	// 	if (inputValue) {
+	// 		setInputValue('terisi');
+	// 	} else {
+	// 		setInputValue('kosong');
+	// 	}
+	// };
+
+	console.log(password);
 	return (
 		<div className="bg-[#94D60A] h-screen flex justify-center items-center z-10">
-			<div className="absolute z-30 h-screen w-56 bg-[#94D60A] left-0 hidden lg:block"></div>
-			<div className="absolute z-30 w-screen h-14 bg-[#94D60A] top-0 block lg:hidden"></div>
+			{/* <div className="absolute z-30 h-screen w-56 bg-[#94D60A] left-0 hidden lg:block"></div> */}
+			{/* <div className="absolute z-30 w-screen h-14 bg-[#94D60A] top-0 block lg:hidden"></div> */}
 
 			<div
 				className={`${
 					auth == 'gagal' ? '' : 'hidden'
 				} absolute top-10 bg-[#E5083C] text-sm text-white p-2 rounded flex items-center gap-2 `}
 			>
-				<p>Username atau Password salah !</p>
+				<p>Email atau Password Tidak Sesuai !</p>
+				<AiOutlineCloseCircle
+					onClick={(e) => cekAuth('close')}
+					className=" cursor-pointer"
+				/>
+			</div>
+
+			<div
+				className={`${
+					inputValue == 'noData' ? '' : 'hidden'
+				} absolute top-10 bg-[#E5083C] text-sm text-white p-2 rounded flex items-center gap-2 `}
+			>
+				<p>Mohon isi Email dan Password!</p>
+				<AiOutlineCloseCircle
+					onClick={(e) => setInputValue('close')}
+					className=" cursor-pointer"
+				/>
 			</div>
 
 			<div
@@ -102,7 +140,7 @@ export default function LoginComponent() {
 								// {...register('email', { required: true })}
 								value={email}
 								onChange={(e) => {
-									setEmail(e.target.value);
+									setEmail(e.target.value), setInputValue(e.target.value);
 								}}
 							/>
 							<label className=" text-sm text-black font-semibold absolute left-3 -top-3 peer-placeholder-shown:top-[3px] peer-placeholder-shown:text-[#00000059] bg-white peer-placeholder-shown:bg-transparent z-10 peer-placeholder-shown:z-0 peer-placeholder-shown:text-sm duration-100">
@@ -127,7 +165,7 @@ export default function LoginComponent() {
 								// {...register('password', { required: true })}
 								value={password}
 								onChange={(e) => {
-									setPassword(e.target.value);
+									setPassword(e.target.value), setInputValue(e.target.value);
 								}}
 							/>
 							<label className=" text-sm text-black font-semibold absolute left-3 -top-3 peer-placeholder-shown:top-[3px] peer-placeholder-shown:text-[#00000059] bg-white peer-placeholder-shown:bg-transparent z-10 peer-placeholder-shown:z-0 peer-placeholder-shown:text-sm duration-100">
@@ -144,13 +182,14 @@ export default function LoginComponent() {
 									Ingat Saya
 								</label>
 							</div>
-							<p className=" text-xs text-[#00000059] font-semibold cursor-pointer hover:translate-x-1 duration-200">
+							{/* <p className=" text-xs text-[#00000059] font-semibold cursor-pointer hover:translate-x-1 duration-200">
 								Lupa kata sandi?
-							</p>
+							</p> */}
 						</div>
 						<button
 							type="submit"
 							className="btn w-full rounded-lg mt-10 p-1 text-center text-white bg-[#94D60A]"
+							// onClick={(e) => checkValue()}
 						>
 							Masuk
 						</button>
