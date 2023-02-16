@@ -3,6 +3,7 @@ import { useState, Fragment, useEffect } from 'react';
 import { Tab, Listbox, Transition } from '@headlessui/react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 export default function UserManagementComponent() {
@@ -18,6 +19,7 @@ export default function UserManagementComponent() {
 	const [loading, setLoading] = useState(true);
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
+	const router = useRouter();
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
@@ -46,12 +48,12 @@ export default function UserManagementComponent() {
 		try {
 			e.preventDefault();
 			if (modal == '') return;
-			// setBerhasilVerif('');
 			setModal('');
 			const res = await axios.post(
 				`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
 				{ volume: inputVolume }
 			);
+			router.refresh();
 			getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
 		} catch (error) {
 			console.log(error);
@@ -68,7 +70,7 @@ export default function UserManagementComponent() {
 					berhasilVerif ? '' : 'hidden'
 				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
 			>
-				<div className="bg-[#F8FFE9] rounded relative">
+				<div className="bg-[#F8FFE9] px-8 py-5 rounded relative">
 					<h1 className="text-[#94D60A] text-3xl">Verfikasi berhasil</h1>
 					<AiOutlineClose
 						className="absolute top-3 right-2 text-[#94D60A] text-xl cursor-pointer"
@@ -244,7 +246,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/minyak/setor/?ordering=created'
+											'https://fadhli.pythonanywhere.com/minyak/setor/?ordering=updated'
 										);
 								}}
 							>

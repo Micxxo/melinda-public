@@ -39,7 +39,7 @@ export default function DasboardComponent() {
 	};
 
 	useEffect(() => {
-		getDatas('https://fadhli.pythonanywhere.com/dashboard/?date=row');
+		getDatas('https://fadhli.pythonanywhere.com/dashboard/');
 	}, []);
 
 	var data = {
@@ -122,7 +122,7 @@ export default function DasboardComponent() {
 								date == 'baru' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
 							} text-sm`}
 							onClick={(e) => {
-								dataSet('row'), setDate('baru');
+								dataSet('now'), setDate('baru');
 							}}
 						>
 							Hari ini

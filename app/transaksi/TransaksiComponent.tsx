@@ -210,7 +210,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											'https://fadhli.pythonanywhere.com/minyak/?ordering=created'
+											'https://fadhli.pythonanywhere.com/minyak/?ordering=updated'
 										);
 								}}
 							>
