@@ -5,6 +5,7 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import cookies from 'universal-cookie';
 
 export default function UserManagementComponent() {
 	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
@@ -60,7 +61,20 @@ export default function UserManagementComponent() {
 		}
 	};
 
-	console.log(loading);
+	const checkAuth = () => {
+		const cookie = new cookies();
+		const getCookie = cookie.get('jwt');
+		if (!getCookie) {
+			console.log('Lom Login');
+			router.push('/');
+		} else {
+			console.log('sudah login');
+		}
+	};
+
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
@@ -93,10 +107,6 @@ export default function UserManagementComponent() {
 							onClick={(e) => modalTrigger('')}
 						/>
 					</div>
-					{/* <p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
-						Verifikasi untuk akun <span className=" text-[#94D60A]"> Mico</span>
-						,masukan inputan minyak di bawah ini
-					</p> */}
 					<p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
 						Verifikasi untuk akun
 						<span className="text-[#94D60A]"> {passsingNama.nama}</span>,
@@ -130,10 +140,7 @@ export default function UserManagementComponent() {
 									: 'text-white rounded-md bg-gray-300 mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl focus:outline-none'
 							}  `}
 							disabled
-							// type="submit"
-							// onClick={(e) => verifyUser(datas.id)}
 							onClick={(e) => {
-								// setGagalVerif(inputVolume),
 								setBerhasilVerif(inputVolume);
 							}}
 						>
@@ -145,10 +152,7 @@ export default function UserManagementComponent() {
 									? 'bg-[#94D60A] rounded-md text-white mt-10 w-2/3 block mx-auto font-semibold p-1 text-xl hover:scale-95 duration-200 cursor-pointer'
 									: 'hidden'
 							}  `}
-							// type="submit"
-							// onClick={(e) => verifyUser(datas.id)}
 							onClick={(e) => {
-								// setGagalVerif(inputVolume),
 								setBerhasilVerif(inputVolume);
 							}}
 						>

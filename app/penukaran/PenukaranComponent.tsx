@@ -1,8 +1,8 @@
 'use client';
 import { useState, Fragment, useEffect } from 'react';
-import { Tab, Listbox, Transition } from '@headlessui/react';
-import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+import cookies from 'universal-cookie';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 export default function UserManagementComponent() {
@@ -21,8 +21,10 @@ export default function UserManagementComponent() {
 	// const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
 	const [error, setError] = useState('');
+	const [waktuData, setWaktuData] = useState('baru');
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
+	const router = useRouter();
 
 	const getuserDatas = async (uri: any) => {
 		try {
@@ -42,34 +44,40 @@ export default function UserManagementComponent() {
 		const res = await axios.get(
 			`https://fourtour.site/melinda/produk/penukaran/${code}`
 		);
-		console.log(res);
 		getuserDatas(
-			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+			'https://fourtour.site/melinda/produk/penukaran?status=menunggu'
 		);
 	};
 
 	useEffect(() => {
 		getuserDatas(
-			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+			'https://fourtour.site/melinda/produk/penukaran?status=menunggu'
 		);
-		// getuserDatas('https://fourtour.site/melinda/produk/0');
 	}, []);
-
-	const [selected, setSelected] = useState(5);
-
-	const [waktuData, setWaktuData] = useState('baru');
-
-	const [jmlData, setJmlData] = useState(5);
 
 	const searchUserSubmit = (e: any) => {
 		console.log(e);
 		e.preventDefault();
 		getuserDatas(
-			`https://fourtour.site/melinda/produk/penukaran?search=${searchUser}`
+			`https://fourtour.site/melinda/produk/penukaran?status=menunggu?search=${searchUser}`
 		);
 	};
 
-	// console.log(modal);
+	const checkAuth = () => {
+		const cookie = new cookies();
+		const getCookie = cookie.get('jwt');
+		if (!getCookie) {
+			console.log('Lom Login');
+			router.push('/');
+		} else {
+			console.log('sudah login');
+		}
+	};
+
+	useEffect(() => {
+		checkAuth();
+	}, []);
+
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL  */}
@@ -188,7 +196,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('baru'),
 										getuserDatas(
-											`https://fourtour.site/melinda/produk/penukaran?limit=5&page=1`
+											`https://fourtour.site/melinda/produk/penukaran?status=menunggu`
 										);
 								}}
 							>
@@ -203,7 +211,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											`https://fourtour.site/melinda/produk/penukaran?ordering=created`
+											`https://fourtour.site/melinda/produk/penukaran?status=menunggu&ordering=created`
 										);
 								}}
 							>

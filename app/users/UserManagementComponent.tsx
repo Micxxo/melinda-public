@@ -5,15 +5,18 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import cookies from 'universal-cookie';
 
 export default function UserManagementComponent() {
 	const [userDatas, setUserDatas] = useState<any>({ count: 0, results: [] });
-	const [userDeleting, setUserDeleting] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [modal, setModal] = useState({ name: '', id: '' });
 	const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
 	const [error, setError] = useState('');
+	const [selected, setSelected] = useState(5);
+	const [waktuData, setWaktuData] = useState('baru');
+	const [jmlData, setJmlData] = useState(5);
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
 	const router = useRouter();
@@ -49,12 +52,6 @@ export default function UserManagementComponent() {
 		getuserDatas('https://fadhli.pythonanywhere.com/users/?limit=5&page=1');
 	}, []);
 
-	const [selected, setSelected] = useState(5);
-
-	const [waktuData, setWaktuData] = useState('baru');
-
-	const [jmlData, setJmlData] = useState(5);
-
 	const searchUserSubmit = (e: any) => {
 		e.preventDefault();
 		getuserDatas(
@@ -63,7 +60,20 @@ export default function UserManagementComponent() {
 		);
 	};
 
-	console.log(loading);
+	const checkAuth = () => {
+		const cookie = new cookies();
+		const getCookie = cookie.get('jwt');
+		if (!getCookie) {
+			console.log('Lom Login');
+			router.push('/');
+		} else {
+			console.log('sudah login');
+		}
+	};
+
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">

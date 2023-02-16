@@ -158,7 +158,7 @@ export default function DasboardComponent() {
 							1 tahun
 						</button>
 					</div>
-					<div className="input mx-auto w-10/12 mt-3 md:mt-0">
+					{/* <div className="input mx-auto w-10/12 mt-3 md:mt-0">
 						<input
 							type="date"
 							placeholder="p"
@@ -169,28 +169,36 @@ export default function DasboardComponent() {
 							placeholder="p"
 							className="bg-[#F8FFE9] text-[#94D60A] border-[#94D60A] border-2 rounded-md p-[1px] md:text-sm mt-1 px-2 |pr-5 text-sm border-l-0 rounded-tl-none rounded-bl-none w-auto"
 						/>
-					</div>
+					</div> */}
 				</div>
 			</div>
 			<div className="card block md:flex md:ml-10 lg:ml-72 m-5 items-center justify-between pr-10 mt-5 w-10/12 md:w-auto mx-auto">
 				<div className="totalMinyak shadow-md mt-5 lg:mt-0 bg-[#94D60A] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer ">
 					<GiOilDrum className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">{totalData.minyak}</h1>
+					<h1 className={`text-xl font-bold mt-2 ${loading ? 'text-lg' : ''}`}>
+						{loading ? 'loading...' : `${totalData.minyak}`}
+					</h1>
 					<p className=" text-xs">Total Minyak</p>
 				</div>
 				<div className="TotalTransaksi shadow-md mt-5 lg:mt-0 bg-[#2F80ED] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<HiUserGroup className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">{totalData.user}</h1>
+					<h1 className={`text-xl font-bold mt-2 ${loading ? 'text-lg' : ''}`}>
+						{loading ? 'loading...' : `${totalData.user}`}
+					</h1>
 					<p className=" text-xs">Total Transaksi</p>
 				</div>
 				<div className="UserBaru shadow-md mt-5 lg:mt-0 bg-[#EB5757] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<FaUserPlus className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">{totalData.user}</h1>
+					<h1 className={`text-xl font-bold mt-2 ${loading ? 'text-sm' : ''}`}>
+						{loading ? 'loading...' : `${totalData.user}`}
+					</h1>
 					<p className=" text-xs">Baru</p>
 				</div>
 				<div className="VerifikasiBaru shadow-md mt-5 lg:mt-0 bg-[#F2C94C] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<IoIosAddCircle className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">{totalData.verifikasi}</h1>
+					<h1 className={`text-xl font-bold mt-2 ${loading ? 'text-lg' : ''}`}>
+						{loading ? 'loading...' : `${totalData.verifikasi}`}
+					</h1>
 					<p className=" text-xs">Verifikasi Baru</p>
 				</div>
 			</div>
