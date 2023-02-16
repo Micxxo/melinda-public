@@ -11,16 +11,24 @@ export default function UserManagementComponent() {
 
 	const [userDeleting, setUserDeleting] = useState('');
 	const [loading, setLoading] = useState(true);
-	const [modal, setModal] = useState({ name: '', id: '' });
-	const [currentPage, setCurrentPage] = useState('page=1');
+	const [modal, setModal] = useState({
+		name: '',
+		code: '',
+		produk: '',
+		biaya: '',
+		id: '',
+	});
+	// const [currentPage, setCurrentPage] = useState('page=1');
 	const [searchUser, setSearch] = useState('');
 	const [error, setError] = useState('');
+	const nextPage = userDatas.next;
+	const prevPage = userDatas.previous;
 
 	const getuserDatas = async (uri: any) => {
 		try {
 			if (!uri) return;
 			setLoading(true);
-			setCurrentPage(uri);
+			// setCurrentPage(uri);
 			const res = await axios.get(uri);
 			setLoading(false);
 			setUserDatas(res.data);
@@ -30,15 +38,15 @@ export default function UserManagementComponent() {
 		}
 	};
 
-	const verifyPenukaran = async (id: any) => {
-		const res = await axios.delete(
-			`https://fadhli.pythonanywhere.com/user/${id}/delete/`
-		);
-		setModal({ name: '', id: '' });
-		getuserDatas(
-			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
-		);
-	};
+	// const verifyPenukaran = async (code: any) => {
+	// 	const res = await axios.get(
+	// 		`https://fourtour.site/melinda/produk/penukaran${code}`
+	// 	);
+	// 	setModal({ name: '', code: '', produk: '', biaya: '' });
+	// 	getuserDatas(
+	// 		'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+	// 	);
+	// };
 
 	useEffect(() => {
 		getuserDatas(
@@ -60,33 +68,39 @@ export default function UserManagementComponent() {
 		);
 	};
 
-	console.log(loading);
+	console.log(modal);
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL  */}
 			<div
 				className={` modal fixed ${
-					modal.id != '' ? '' : 'hidden'
+					modal.code != '' ? '' : 'hidden'
 				} bg-[#00000040] h-screen w-full z-10 flex justify-center items-center`}
 			>
 				<div className="bg-[#F8FFE9] rounded pt-3 pl-8 pr-8 pb-5">
 					<div className="flex w-full justify-center items-center gap-5 relative">
-						<h1 className="text-[#94D60A] text-3xl pt-5"> ON CONTRUCTION</h1>
+						<h1 className="text-[#94D60A] text-3xl pt-5"> Verifikasi </h1>
 						<AiOutlineClose
 							className="text-[#94D60A] text-xl absolute right-0 top-0 cursor-pointer"
-							onClick={(e) => setModal({ name: '', id: '' })}
+							onClick={(e) =>
+								setModal({ name: '', code: '', produk: '', biaya: '', id: '' })
+							}
 						/>
 					</div>
 					<p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
-						Page is still under Contruction
+						User <span className="text-[#94D60A]">{modal.name}</span> akan
+						menukar
+						<span className="text-[#94D60A]"> {modal.produk}</span> dengan{' '}
+						<span className="text-[#94D60A]"> {modal.biaya} </span>
+						poin
 						{/* <span className=" text-[#94D60A]"> {modal.name}</span> */}
 					</p>
-					{/* <button
+					<button
 						className="bg-[#94D60A] w-full rounded-md text-white mt-10"
-						onClick={(e) => deleteUser(modal.id)}
+						// onClick={(e) => deleteUser(modal.id)}
 					>
-						Go back
-					</button> */}
+						Iya
+					</button>
 				</div>
 			</div>
 			{/* MODAL END  */}
@@ -263,7 +277,13 @@ export default function UserManagementComponent() {
 											<td
 												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
 												onClick={(e) =>
-													setModal({ name: datas.name, id: datas.id })
+													setModal({
+														name: datas.nama,
+														code: datas.kode,
+														produk: datas.produk,
+														biaya: datas.biaya,
+														id: datas.id_pengguna,
+													})
 												}
 											>
 												<div
@@ -288,7 +308,9 @@ export default function UserManagementComponent() {
 						<h1 className="font-semibold">Total Data: {userDatas.count}</h1>
 						<div className="flex gap-2">
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									prevPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">
@@ -297,12 +319,39 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									prevPage == null ? '' : 'hidden'
+								}`}
+								onClick={(e) => getuserDatas(userDatas.previous)}
+								disabled
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">
+									Previous
+								</p>
+							</button>
+
+							{/* NEXT PAGE  */}
+							<button
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									nextPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
+							</button>
+
+							<button
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									nextPage == null ? '' : 'hidden'
+								}`}
+								disabled
+								onClick={(e) => {
+									getuserDatas(userDatas.next);
+								}}
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>

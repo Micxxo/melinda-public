@@ -14,12 +14,16 @@ export default function UserManagementComponent() {
 	const [selected, setSelected] = useState(5);
 	const [waktuData, setWaktuData] = useState('baru');
 	const [jmlData, setJmlData] = useState(5);
+	const [passsingNama, setPassingNama] = useState({ nama: '' });
+	const [loading, setLoading] = useState(true);
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
+		setLoading(true);
 		const res = await axios.get(uri);
+		setLoading(false);
 		setUserDatas(res.data);
 	};
 
@@ -53,6 +57,8 @@ export default function UserManagementComponent() {
 			console.log(error);
 		}
 	};
+
+	console.log(loading);
 
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
@@ -90,9 +96,11 @@ export default function UserManagementComponent() {
 						,masukan inputan minyak di bawah ini
 					</p> */}
 					<p className=" w-1/2 mx-auto text-center mt-10 text-sm text-[#00000080]">
-						Verifikasi dengan memasukan{' '}
-						<span className="text-[red]">inputan minyak </span> di bawah ini
-						dalam satuan <span className="text-[red]">mL</span>
+						Verifikasi untuk akun
+						<span className="text-[#94D60A]"> {passsingNama.nama}</span>,
+						masukan
+						<span className="text-[#94D60A]"> inputan minyak </span> di bawah
+						ini dalam satuan <span className="text-[#94D60A]">mL</span>
 					</p>
 					<h1 className="text-[#00000080] mt-2 w-2/3 text-xl block mx-auto">
 						Masukan Minyak
@@ -148,11 +156,23 @@ export default function UserManagementComponent() {
 				</div>
 			</div>
 
+			<div
+				className={`${loading ? '' : 'hidden'} bg-red-300 
+				text-center absolute right-0 animate-spin rounded-md`}
+			></div>
+
 			<h1 className="text-[#94D60A] pl-2 md:pl-10 lg:pl-72 pt-6 font-bold text-3xl">
 				Penyetoran
 			</h1>
 
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
+				<div
+					className={`${
+						loading ? '' : 'hidden'
+					} w-full relative text-center relative`}
+				>
+					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
+				</div>
 				<div className="wrapper flex justify-between items-center">
 					<div className=" p-5 flex gap-5 items-center">
 						<div className="jmlData">
@@ -290,7 +310,12 @@ export default function UserManagementComponent() {
 											</td>
 											<td
 												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
-												onClick={(e) => modalTrigger(datas.id)}
+												onClick={(e) => {
+													setPassingNama({
+														nama: datas.user,
+													}),
+														modalTrigger(datas.id);
+												}}
 											>
 												<div className="p-1 border-2 border-[#94D60A] text-[#94D60A] rounded text-center hover:scale-95 duration-200">
 													Verifikasi
@@ -324,7 +349,7 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md ${
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
 									prevPage == null ? '' : 'hidden'
 								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
@@ -348,7 +373,7 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md   ${
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed   ${
 									nextPage == null ? '' : 'hidden'
 								}`}
 								disabled

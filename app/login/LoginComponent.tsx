@@ -39,26 +39,32 @@ export default function LoginComponent() {
 	const login = async (e: any) => {
 		try {
 			e.preventDefault();
-			const res = await axios.post('https://fadhli.pythonanywhere.com/login/', {
+			const res = await axios.post('https://fourtour.site/melinda/login/', {
 				email,
 				password,
 			});
-			if (email == 'admin@gmail.com' && password == 'qwer') {
-				cekAuth('berhasil');
-				const cookkie = new Cookies();
-				cookkie.set('jwt', res.data.jwt, {
-					path: '/',
-				});
-				router.push('/dashboard');
-			} else {
-				cekAuth('gagal');
-			}
+			// if (email == 'admin@gmail.com' && password == 'qwer') {
+			// 	cekAuth('berhasil');
+			// 	const cookkie = new Cookies();
+			// 	cookkie.set('jwt', res.data.jwt, {
+			// 		path: '/',
+			// 	});
+			// 	router.push('/dashboard');
+			// } else {
+			// 	cekAuth('gagal');
+			// }
 			// if (res.status == 200) {
 
 			// }
 			// if (inputValue == '') {
 			// 	console.log('gagal masseh');
 			// }
+			cekAuth('berhasil');
+			const cookkie = new Cookies();
+			cookkie.set('jwt', res.data.jwt, {
+				path: '/',
+			});
+			router.push('/dashboard');
 		} catch (errors) {
 			cekAuth('gagal');
 		}

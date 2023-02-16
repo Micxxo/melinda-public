@@ -12,9 +12,12 @@ export default function UserManagementComponent() {
 	const [modal, setModal] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [searchUser, setSearch] = useState('');
+	const nextPage = userDatas.next;
+	const prevPage = userDatas.previous;
 
 	const getuserDatas = async (uri: string) => {
 		if (!uri) return;
+		setLoading(true);
 		const res = await axios.get(uri);
 		setLoading(false);
 		setUserDatas(res.data);
@@ -28,10 +31,6 @@ export default function UserManagementComponent() {
 
 	const [waktuData, setWaktuData] = useState('baru');
 
-	const [jmlData, setJmlData] = useState(5);
-	// console.log(waktuData);
-	// console.log(jmlData);
-	// console.log(selected);
 	console.log(loading);
 
 	const searchUserSubmit = (e: any) => {
@@ -87,16 +86,15 @@ export default function UserManagementComponent() {
 			</div>
 
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
+				<div
+					className={`${
+						loading ? '' : 'hidden'
+					} w-full relative text-center relative`}
+				>
+					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
+				</div>
 				<h1 className="text-[#94D60A] pl-5 pt-6 font-bold text-3xl">
 					Transaksi Penyetoran
-				</h1>
-
-				<h1
-					className={`${
-						loading ? 'block' : 'hidden'
-					}  w-full text-center right-0 absolute`}
-				>
-					Loading....
 				</h1>
 
 				<div className="wrapper flex justify-between items-center">
@@ -255,7 +253,9 @@ export default function UserManagementComponent() {
 						</h1>
 						<div className="flex gap-2">
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									prevPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">
@@ -264,12 +264,39 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									prevPage == null ? '' : 'hidden'
+								}`}
+								onClick={(e) => getuserDatas(userDatas.previous)}
+								disabled
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">
+									Previous
+								</p>
+							</button>
+
+							{/* NEXT PAGE  */}
+							<button
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									nextPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
+							</button>
+
+							<button
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									nextPage == null ? '' : 'hidden'
+								}`}
+								disabled
+								onClick={(e) => {
+									getuserDatas(userDatas.next);
+								}}
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>
@@ -278,6 +305,13 @@ export default function UserManagementComponent() {
 
 			{/* TRANSAKSI PENUKARAN */}
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
+				<div
+					className={`${
+						loading ? '' : 'hidden'
+					} w-full relative text-center relative`}
+				>
+					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
+				</div>
 				<h1 className="text-[#94D60A] pl-5 pt-6 font-bold text-3xl">
 					Transaksi Penukaran
 				</h1>
@@ -415,7 +449,9 @@ export default function UserManagementComponent() {
 						</h1>
 						<div className="flex gap-2">
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									prevPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">
@@ -424,12 +460,39 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className="btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200"
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									prevPage == null ? '' : 'hidden'
+								}`}
+								onClick={(e) => getuserDatas(userDatas.previous)}
+								disabled
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">
+									Previous
+								</p>
+							</button>
+
+							{/* NEXT PAGE  */}
+							<button
+								className={`btn border-2 border-[#94D60A] p-2 rounded-md hover:scale-95 duration-200 ${
+									nextPage == null ? 'hidden' : ''
+								}`}
 								onClick={(e) => {
 									getuserDatas(userDatas.next);
 								}}
 							>
 								<p className="text-[#94D60A] text-sm md:text-md px-3">Next</p>
+							</button>
+
+							<button
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
+									nextPage == null ? '' : 'hidden'
+								}`}
+								disabled
+								onClick={(e) => {
+									getuserDatas(userDatas.next);
+								}}
+							>
+								<p className="text-[#D3EC9F] text-sm md:text-md px-3">Next</p>
 							</button>
 						</div>
 					</div>

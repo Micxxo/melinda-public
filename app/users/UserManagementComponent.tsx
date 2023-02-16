@@ -63,6 +63,8 @@ export default function UserManagementComponent() {
 		);
 	};
 
+	console.log(loading);
+
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL  */}
@@ -98,23 +100,14 @@ export default function UserManagementComponent() {
 				User Management
 			</h1>
 
-			{/* {loading ? (
-				<h1 className="ml-72 bg-orange-500 w-32 text-center p-2 text-white rounded">
-					Loading...
-				</h1>
-			) : (
-				''
-			)} */}
-
-			<h1
-				className={`${
-					loading ? 'block' : 'hidden'
-				}  w-full text-center right-0 absolute`}
-			>
-				Loading...
-			</h1>
-
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
+				<div
+					className={`${
+						loading ? '' : 'hidden'
+					} w-full relative text-center relative`}
+				>
+					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
+				</div>
 				<div className="wrapper flex justify-between items-center">
 					<div className=" p-5 flex gap-5 items-center">
 						<div className="jmlData">
@@ -289,7 +282,7 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md ${
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
 									prevPage == null ? '' : 'hidden'
 								}`}
 								onClick={(e) => getuserDatas(userDatas.previous)}
@@ -313,7 +306,7 @@ export default function UserManagementComponent() {
 							</button>
 
 							<button
-								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md   ${
+								className={` btn border-2 border-[#D3EC9F] p-2 rounded-md cursor-not-allowed ${
 									nextPage == null ? '' : 'hidden'
 								}`}
 								disabled
