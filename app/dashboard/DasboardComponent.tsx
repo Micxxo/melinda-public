@@ -22,7 +22,25 @@ Chartjs.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
 export default function DasboardComponent() {
 	const router = useRouter();
-	const [warna, setWarna] = useState('baru');
+	const [date, setDate] = useState('baru');
+	const [totalData, setTotalData] = useState<any>({});
+	const [loading, setLoading] = useState(true);
+
+	const getDatas = async (uri: string) => {
+		if (!uri) return;
+		setLoading(true);
+		const res = await axios.get(uri);
+		setLoading(false);
+		setTotalData(res.data);
+	};
+
+	const dataSet = (date: any) => {
+		getDatas(`https://fadhli.pythonanywhere.com/dashboard/?date=${date}`);
+	};
+
+	useEffect(() => {
+		getDatas('https://fadhli.pythonanywhere.com/dashboard/?date=row');
+	}, []);
 
 	var data = {
 		labels: [
@@ -101,33 +119,41 @@ export default function DasboardComponent() {
 					<div className="btn-group grid grid-cols-4 md:w-52 w-10/12 pt-1 mx-auto mt-3 md:mt-0 ">
 						<button
 							className={`border-[#94D60A] text-white border-2 btn btn-outline  rounded-tl-md rounded-bl-md border-r-0 ${
-								warna == 'baru' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
+								date == 'baru' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
 							} text-sm`}
-							onClick={(e) => setWarna('baru')}
+							onClick={(e) => {
+								dataSet('row'), setDate('baru');
+							}}
 						>
 							Hari ini
 						</button>
 						<button
 							className={`border-[#94D60A] text-white border-2 btn btn-outline  ${
-								warna == 'hari' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
+								date == 'hari' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
 							} text-sm`}
-							onClick={(e) => setWarna('hari')}
+							onClick={(e) => {
+								dataSet('week'), setDate('hari');
+							}}
 						>
 							7 hari
 						</button>
 						<button
 							className={` border-2 border-[#94D60A] border-l-0 btn btn-outlinerounded-br-md ${
-								warna == 'bulan' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
+								date == 'bulan' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
 							} text-sm`}
-							onClick={(e) => setWarna('bulan')}
+							onClick={(e) => {
+								dataSet('month'), setDate('bulan');
+							}}
 						>
 							1 bulan
 						</button>
 						<button
 							className={` border-2 border-[#94D60A] border-l-0 btn btn-outline rounded-tr-md rounded-br-md ${
-								warna == 'tahun' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
+								date == 'tahun' ? 'text-white bg-[#94D60A]' : 'text-[#94D60A]'
 							} text-sm`}
-							onClick={(e) => setWarna('tahun')}
+							onClick={(e) => {
+								dataSet('year'), setDate('tahun');
+							}}
 						>
 							1 tahun
 						</button>
@@ -149,42 +175,22 @@ export default function DasboardComponent() {
 			<div className="card block md:flex md:ml-10 lg:ml-72 m-5 items-center justify-between pr-10 mt-5 w-10/12 md:w-auto mx-auto">
 				<div className="totalMinyak shadow-md mt-5 lg:mt-0 bg-[#94D60A] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer ">
 					<GiOilDrum className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">
-						{warna == 'baru' ? '1000 ML' : ''}
-						{warna == 'hari' ? '5000 ML' : ''}
-						{warna == 'bulan' ? '15000 ML' : ''}
-						{warna == 'tahun' ? '65000 ML' : ''}
-					</h1>
+					<h1 className="text-xl font-bold mt-2">{totalData.minyak}</h1>
 					<p className=" text-xs">Total Minyak</p>
 				</div>
 				<div className="TotalTransaksi shadow-md mt-5 lg:mt-0 bg-[#2F80ED] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<HiUserGroup className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">
-						{warna == 'baru' ? '2 User' : ''}
-						{warna == 'hari' ? '10 User' : ''}
-						{warna == 'bulan' ? '15.000 User' : ''}
-						{warna == 'tahun' ? '1.000.000 User' : ''}
-					</h1>
+					<h1 className="text-xl font-bold mt-2">{totalData.user}</h1>
 					<p className=" text-xs">Total Transaksi</p>
 				</div>
 				<div className="UserBaru shadow-md mt-5 lg:mt-0 bg-[#EB5757] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<FaUserPlus className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">
-						{warna == 'baru' ? '1 User' : ''}
-						{warna == 'hari' ? '10 User' : ''}
-						{warna == 'bulan' ? '100 User' : ''}
-						{warna == 'tahun' ? '250 User' : ''}
-					</h1>
+					<h1 className="text-xl font-bold mt-2">{totalData.user}</h1>
 					<p className=" text-xs">Baru</p>
 				</div>
 				<div className="VerifikasiBaru shadow-md mt-5 lg:mt-0 bg-[#F2C94C] text-white p-5 rounded-md text-center px-10 hover:scale-105 duration-200 cursor-pointer">
 					<IoIosAddCircle className="mx-auto block text-lg" />
-					<h1 className="text-xl font-bold mt-2">
-						{warna == 'baru' ? '5' : ''}
-						{warna == 'hari' ? '6' : ''}
-						{warna == 'bulan' ? '12' : ''}
-						{warna == 'tahun' ? '33' : ''}
-					</h1>
+					<h1 className="text-xl font-bold mt-2">{totalData.verifikasi}</h1>
 					<p className=" text-xs">Verifikasi Baru</p>
 				</div>
 			</div>

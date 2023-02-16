@@ -110,7 +110,7 @@ export default function UserManagementComponent() {
 								<td>
 									<button
 										className="bg-[#94D60A] text-white rounded-md text-[26px] ml-2 cursor-pointer mt-1"
-										title="."
+										title="Search"
 									>
 										<AiOutlineSearch />
 									</button>
@@ -131,9 +131,7 @@ export default function UserManagementComponent() {
 
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
 				<div
-					className={`${
-						loading ? '' : 'hidden'
-					} w-full relative text-center relative`}
+					className={`${loading ? '' : 'hidden'} w-full  text-center relative`}
 				>
 					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
 				</div>
@@ -264,22 +262,22 @@ export default function UserManagementComponent() {
 											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.id_user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.email}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.phone}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.volume} ml
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.poin}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas?.status}
 											</td>
 										</tr>
@@ -459,22 +457,22 @@ export default function UserManagementComponent() {
 											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.id_user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.email}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.phone}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.volume} ml
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.poin}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.status}
 											</td>
 										</tr>

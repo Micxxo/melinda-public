@@ -68,7 +68,7 @@ export default function UserManagementComponent() {
 					berhasilVerif ? '' : 'hidden'
 				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
 			>
-				<div className="bg-[#F8FFE9] rounded py-10 pl-8 pr-8 relative">
+				<div className="bg-[#F8FFE9] rounded relative">
 					<h1 className="text-[#94D60A] text-3xl">Verfikasi berhasil</h1>
 					<AiOutlineClose
 						className="absolute top-3 right-2 text-[#94D60A] text-xl cursor-pointer"
@@ -299,17 +299,17 @@ export default function UserManagementComponent() {
 											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.id_user}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.email}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.phone}
 											</td>
 											<td
-												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
+												className="pt-5 pr-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
 												onClick={(e) => {
 													setPassingNama({
 														nama: datas.user,

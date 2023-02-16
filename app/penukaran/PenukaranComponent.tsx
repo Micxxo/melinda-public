@@ -38,15 +38,15 @@ export default function UserManagementComponent() {
 		}
 	};
 
-	// const verifyPenukaran = async (code: any) => {
-	// 	const res = await axios.get(
-	// 		`https://fourtour.site/melinda/produk/penukaran${code}`
-	// 	);
-	// 	setModal({ name: '', code: '', produk: '', biaya: '' });
-	// 	getuserDatas(
-	// 		'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
-	// 	);
-	// };
+	const verifyPenukaran = async (code: any) => {
+		const res = await axios.get(
+			`https://fourtour.site/melinda/produk/penukaran/${code}`
+		);
+		console.log(res);
+		getuserDatas(
+			'https://fourtour.site/melinda/produk/penukaran?limit=5&page=1'
+		);
+	};
 
 	useEffect(() => {
 		getuserDatas(
@@ -62,13 +62,14 @@ export default function UserManagementComponent() {
 	const [jmlData, setJmlData] = useState(5);
 
 	const searchUserSubmit = (e: any) => {
+		console.log(e);
 		e.preventDefault();
 		getuserDatas(
-			`https://fourtour.site/melinda/produk/penukaran?page=1${searchUser}`
+			`https://fourtour.site/melinda/produk/penukaran?search=${searchUser}`
 		);
 	};
 
-	console.log(modal);
+	// console.log(modal);
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			{/* MODAL  */}
@@ -97,7 +98,7 @@ export default function UserManagementComponent() {
 					</p>
 					<button
 						className="bg-[#94D60A] w-full rounded-md text-white mt-10"
-						// onClick={(e) => deleteUser(modal.id)}
+						onClick={(e) => verifyPenukaran(modal.code)}
 					>
 						Iya
 					</button>
@@ -132,30 +133,30 @@ export default function UserManagementComponent() {
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
 				<div className="wrapper flex justify-between items-center">
 					<div className=" p-5 flex gap-5 items-center">
-						<div className="jmlData">
+						{/* <div className="jmlData">
 							<select
 								name=""
 								title="jmlData"
 								id=""
 								value={selected}
 								className="bg-[#94D60A] rounded-md outline-none text-white p-[2px] mt-[3px] cursor-pointer"
-								// onChange={(e) => {
-								// 	setSelected(parseInt(e.target.value));
-								// 	{
-								// 		waktuData == 'baru'
-								// 					getuserDatas(
-								// 						`https://fadhli.pythonanywhere.com/user/?limit=${e.target.value}`
-								// 						// `https://fourtour.site/melinda/produk/0`
-								// 					);
-								// 			  }, 100)
-								// 			: setTimeout(() => {
-								// 					getuserDatas(
-								// 						`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&limit=${e.target.value}`
-								// 						// `https://fourtour.site/melinda/produk/0`
-								// 					);
-								// 			  }, 100);
-								// 	}
-								// }}
+								onChange={(e) => {
+									setSelected(parseInt(e.target.value));
+									{
+										waktuData == 'baru'
+													getuserDatas(
+														`https://fadhli.pythonanywhere.com/user/?limit=${e.target.value}`
+														// `https://fourtour.site/melinda/produk/0`
+													);
+											  }, 100)
+											: setTimeout(() => {
+													getuserDatas(
+														`https://fadhli.pythonanywhere.com/user/?ordering=createdAt&limit=${e.target.value}`
+														// `https://fourtour.site/melinda/produk/0`
+													);
+											  }, 100);
+									}
+								}}
 							>
 								<option
 									value="5"
@@ -176,7 +177,7 @@ export default function UserManagementComponent() {
 									10
 								</option>
 							</select>
-						</div>
+						</div> */}
 						<div className="btn-group grid grid-cols-2 md:w-44 pt-1 w-28">
 							<button
 								className={`border-[#94D60A] border-r-0 text-white border-2 btn btn-outline  rounded-tl-md rounded-bl-md ${
@@ -202,7 +203,7 @@ export default function UserManagementComponent() {
 								onClick={(e) => {
 									setWaktuData('lama'),
 										getuserDatas(
-											`https://fourtour.site/melinda/produk/penukaran?limit=5&page=1`
+											`https://fourtour.site/melinda/produk/penukaran?ordering=created`
 										);
 								}}
 							>
@@ -239,9 +240,7 @@ export default function UserManagementComponent() {
 									<td className="rounded-bl-lg rounded-tl-lg bg-[#94D60A] p-1 pl-3">
 										Nama
 									</td>
-									<td>NIU</td>
 									<td>Email</td>
-									<td>No.Tlp</td>
 									<td>Nama Barang</td>
 									<td>Jumlah</td>
 									<td
@@ -259,23 +258,17 @@ export default function UserManagementComponent() {
 											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.nama}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-												{datas.id}
-											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.email}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
-												{datas.phone}
-											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.produk}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.jumlah}
 											</td>
 											<td
-												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
+												className="pt-5 pr-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
 												onClick={(e) =>
 													setModal({
 														name: datas.nama,
@@ -301,10 +294,9 @@ export default function UserManagementComponent() {
 					</div>
 
 					<div className="footer flex justify-between mt-5 pb-5 p-1 items-center">
-						<h1 className="font-semibold">
-							{/* Showing {selected} to {userDatas.count} */}
+						{/* <h1 className="font-semibold">
 							Showing {selected} data
-						</h1>
+						</h1> */}
 						<h1 className="font-semibold">Total Data: {userDatas.count}</h1>
 						<div className="flex gap-2">
 							<button

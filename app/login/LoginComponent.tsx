@@ -43,41 +43,31 @@ export default function LoginComponent() {
 				email,
 				password,
 			});
-			// if (email == 'admin@gmail.com' && password == 'qwer') {
-			// 	cekAuth('berhasil');
-			// 	const cookkie = new Cookies();
-			// 	cookkie.set('jwt', res.data.jwt, {
-			// 		path: '/',
-			// 	});
-			// 	router.push('/dashboard');
-			// } else {
-			// 	cekAuth('gagal');
-			// }
-			// if (res.status == 200) {
-
-			// }
-			// if (inputValue == '') {
-			// 	console.log('gagal masseh');
-			// }
-			cekAuth('berhasil');
-			const cookkie = new Cookies();
-			cookkie.set('jwt', res.data.jwt, {
-				path: '/',
-			});
-			router.push('/dashboard');
+			if (email == 'admin@gmail.com' && password == '7654321') {
+				cekAuth('berhasil');
+				const cookkie = new Cookies();
+				cookkie.set('jwt', res.data.jwt, {
+					path: '/',
+				});
+				router.push('/dashboard');
+			} else {
+				cekAuth('gagal');
+			}
+			if (res.status == 200) {
+			}
+			if (inputValue == '') {
+				console.log('gagal masseh');
+			}
+			// cekAuth('berhasil');
+			// const cookkie = new Cookies();
+			// cookkie.set('jwt', res.data.jwt, {
+			// 	path: '/',
+			// });
+			// router.push('/dashboard');
 		} catch (errors) {
 			cekAuth('gagal');
 		}
 	};
-
-	// const checkValue = (e:any) => {
-	// 	e.preventDefault()
-	// 	if (inputValue) {
-	// 		setInputValue('terisi');
-	// 	} else {
-	// 		setInputValue('kosong');
-	// 	}
-	// };
 
 	console.log(password);
 	return (
@@ -188,9 +178,6 @@ export default function LoginComponent() {
 									Ingat Saya
 								</label>
 							</div>
-							{/* <p className=" text-xs text-[#00000059] font-semibold cursor-pointer hover:translate-x-1 duration-200">
-								Lupa kata sandi?
-							</p> */}
 						</div>
 						<button
 							type="submit"

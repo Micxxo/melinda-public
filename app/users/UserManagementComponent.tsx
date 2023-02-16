@@ -234,17 +234,17 @@ export default function UserManagementComponent() {
 											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.name}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5  border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.id}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.email}
 											</td>
-											<td className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
+											<td className="pt-5 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer">
 												{datas.phone}
 											</td>
 											<td
-												className="pt-5 pl-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
+												className="pt-5 pr-3 border-[#D9D9D9] border-b-2 pb-2 cursor-pointer"
 												onClick={(e) =>
 													setModal({ name: datas.name, id: datas.id })
 												}
