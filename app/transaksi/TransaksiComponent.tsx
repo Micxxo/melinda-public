@@ -12,15 +12,21 @@ export default function UserManagementComponent() {
 	const [modal, setModal] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [searchUser, setSearch] = useState('');
+	const [startDate, setStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
 
 	const getuserDatas = async (uri: string) => {
-		if (!uri) return;
-		setLoading(true);
-		const res = await axios.get(uri);
-		setLoading(false);
-		setUserDatas(res.data);
+		try {
+			if (!uri) return;
+			setLoading(true);
+			const res = await axios.get(uri);
+			setLoading(false);
+			setUserDatas(res.data);
+		} catch (error) {
+			getuserDatas('https://fadhli.pythonanywhere.com/minyak/?limit=5&page=1');
+		}
 	};
 
 	useEffect(() => {
@@ -40,6 +46,21 @@ export default function UserManagementComponent() {
 		);
 	};
 
+	const resetDate = () => {
+		setStartDate('');
+		setEndDate('');
+		getuserDatas('https://fadhli.pythonanywhere.com/minyak/?limit=5&page=1');
+	};
+
+	const searchFromDate = (e: any) => {
+		e.preventDefault();
+		const cek = getuserDatas(
+			`https://fadhli.pythonanywhere.com/minyak/?start=${startDate}&end=${endDate}`
+		);
+	};
+
+	console.log(startDate);
+	console.log(endDate);
 	return (
 		<div className="pr-0 md:pr-5 z-0 pb-10">
 			<h1 className="text-[#94D60A] pl-2 md:pl-10 lg:pl-72 pt-6 font-bold text-3xl">
@@ -47,7 +68,12 @@ export default function UserManagementComponent() {
 			</h1>
 
 			<div className="waktu ml-2 md:ml-10 lg:ml-72 my-2 overflow-auto">
-				<form action="">
+				<form
+					action=""
+					onSubmit={(e) => {
+						searchFromDate(e);
+					}}
+				>
 					<table>
 						<thead>
 							<tr>
@@ -64,6 +90,10 @@ export default function UserManagementComponent() {
 										type="date"
 										placeholder="."
 										className=" placeholder-transparent border-[#94D60A] border-2 bg-[#F8FFE9] rounded-md px-1"
+										onChange={(e) => {
+											setStartDate(e.target.value);
+										}}
+										value={startDate}
 									/>
 								</td>
 								<td>
@@ -71,13 +101,27 @@ export default function UserManagementComponent() {
 										type="date"
 										placeholder="."
 										className=" placeholder-transparent border-[#94D60A] border-2 bg-[#F8FFE9] rounded-md px-1 ml-2"
+										onChange={(e) => {
+											setEndDate(e.target.value);
+										}}
+										value={endDate}
 									/>
 								</td>
 								<td>
-									<AiOutlineSearch className="bg-[#94D60A] text-white rounded-md text-[26px] ml-2 cursor-pointer" />
+									<button
+										className="bg-[#94D60A] text-white rounded-md text-[26px] ml-2 cursor-pointer mt-1"
+										title="."
+									>
+										<AiOutlineSearch />
+									</button>
 								</td>
 								<td>
-									<IoMdRefresh className="bg-[#94D60A] text-white rounded-md text-[26px] ml-2 cursor-pointer" />
+									<IoMdRefresh
+										className="bg-[#94D60A] text-white rounded-md text-[26px] ml-2 cursor-pointer"
+										onClick={(e) => {
+											resetDate();
+										}}
+									/>
 								</td>
 							</tr>
 						</tbody>

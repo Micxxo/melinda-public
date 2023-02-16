@@ -112,7 +112,7 @@ export default function UserManagementComponent() {
 				Something Went Wrong
 			</h1>
 			;
-			<h1 className="text-[#94D60A] pl-2 md:pl-10 lg:pl-72 pt-6 font-bold text-2xl">
+			<h1 className="text-[#94D60A] pl-2 md:pl-10 lg:pl-72 pt-6 font-bold text-3xl">
 				Penukaran
 			</h1>
 			{/* {loading ? (
