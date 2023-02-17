@@ -14,6 +14,7 @@ export default function UserManagementComponent() {
 	});
 	const [loading, setLoading] = useState(true);
 	const [searchUser, setSearch] = useState('');
+	const [searchPenukaran, setSearchPenukaran] = useState('');
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 	const [selected, setSelected] = useState(5);
@@ -40,6 +41,7 @@ export default function UserManagementComponent() {
 		if (!uri) return;
 		setLoading(true);
 		const res = await axios.get(uri);
+		console.log(res);
 		setLoading(false);
 		setPenukaranDatas(res.data);
 	};
@@ -60,6 +62,15 @@ export default function UserManagementComponent() {
 			`https://fadhli.pythonanywhere.com/minyak/?ordering=createdAt&search=${searchUser}`
 		);
 	};
+
+	const searchDataPenukaran = (e: any) => {
+		e.preventDefault();
+		getPenukaranData(
+			`https://fourtour.site/melinda/produk/penukaran?status=ok&search=${searchPenukaran}`
+		);
+	};
+
+	console.log(searchPenukaran);
 
 	const resetDate = () => {
 		setStartDate('');
@@ -452,10 +463,20 @@ export default function UserManagementComponent() {
 							</button>
 						</div>
 					</div>
-					<form action="" className="relative">
+					<form
+						action=""
+						className="relative"
+						onSubmit={(e) => {
+							searchDataPenukaran(e);
+						}}
+					>
 						<input
 							className="search flex items-center border-[#94D60A] border-[1px] mr-6 p-1 gap-2 md:w-60 w-10/12 rounded-lg bg-transparent placeholder:font-semibold peer z-20 pl-7"
 							placeholder="Search"
+							onChange={(e) => {
+								setSearchPenukaran(e.target.value);
+							}}
+							value={searchPenukaran}
 						/>
 						<AiOutlineSearch className="text-[#00000080] font-semibold absolute top-2 left-1 duration-200 peer-placeholder-shown:font-bold z-0" />
 					</form>

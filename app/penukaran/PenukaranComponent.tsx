@@ -59,7 +59,7 @@ export default function UserManagementComponent() {
 		console.log(e);
 		e.preventDefault();
 		getuserDatas(
-			`https://fourtour.site/melinda/produk/penukaran?status=menunggu?search=${searchUser}`
+			`https://fourtour.site/melinda/produk/penukaran?status=menunggu&search=${searchUser}`
 		);
 	};
 
