@@ -202,7 +202,7 @@ export default function DasboardComponent() {
 					<p className=" text-xs">Verifikasi Baru</p>
 				</div>
 			</div>
-			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 md:w-auto w-full min-h-full shadow-md block md:flex justify-around items-center bg-[#F8FFE9] px-5">
+			{/* <div className=" ml-0 md:ml-10 lg:ml-72 mt-10 md:w-auto w-full min-h-full shadow-md block md:flex justify-around items-center bg-[#F8FFE9] px-5">
 				<div className="BarChart w-full md:w-2/3 ">
 					<Bar height={400} data={data} options={option} />
 				</div>
@@ -225,7 +225,7 @@ export default function DasboardComponent() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

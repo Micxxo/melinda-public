@@ -3,7 +3,7 @@ import { useState, Fragment, useEffect } from 'react';
 import { Tab, Listbox, Transition } from '@headlessui/react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import axios from 'axios';
 import cookies from 'universal-cookie';
 
@@ -54,7 +54,6 @@ export default function UserManagementComponent() {
 				`https://fadhli.pythonanywhere.com/minyak/setor/${modal}/verifikasi/`,
 				{ volume: inputVolume }
 			);
-			router.refresh();
 			getuserDatas(`https://fadhli.pythonanywhere.com/minyak/setor/?page=1`);
 		} catch (error) {
 			console.log(error);
@@ -153,7 +152,9 @@ export default function UserManagementComponent() {
 									: 'hidden'
 							}  `}
 							onClick={(e) => {
-								setBerhasilVerif(inputVolume);
+								{
+									setBerhasilVerif(inputVolume);
+								}
 							}}
 						>
 							Masukan
@@ -173,9 +174,7 @@ export default function UserManagementComponent() {
 
 			<div className=" ml-0 md:ml-10 lg:ml-72 mt-10 w-full md:w-auto min-h-full px-2 sm:px-0 bg-[#F8FFE9] relative rounded shadow-md">
 				<div
-					className={`${
-						loading ? '' : 'hidden'
-					} w-full relative text-center relative`}
+					className={`${loading ? '' : 'hidden'} w-full relative text-center `}
 				>
 					<h1 className="absolute right-0 left-0 top-5">Loading...</h1>
 				</div>
@@ -262,7 +261,9 @@ export default function UserManagementComponent() {
 						action=""
 						className="relative"
 						onSubmit={(e) => {
-							searchUserSubmit(e);
+							{
+								searchUserSubmit(e);
+							}
 						}}
 					>
 						<input

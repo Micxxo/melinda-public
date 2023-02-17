@@ -169,7 +169,7 @@ export default function LoginComponent() {
 							</label>
 						</div>
 						<div className="wrapper flex justify-between mt-2">
-							<div className="ingatSaya flex items-center">
+							{/* <div className="ingatSaya flex items-center">
 								<input type="checkbox" name="ingatSaya" placeholder="." />
 								<label
 									htmlFor="ingatSaya"
@@ -177,7 +177,7 @@ export default function LoginComponent() {
 								>
 									Ingat Saya
 								</label>
-							</div>
+							</div> */}
 						</div>
 						<button
 							type="submit"
