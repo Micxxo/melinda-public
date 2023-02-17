@@ -22,6 +22,7 @@ export default function UserManagementComponent() {
 	const [searchUser, setSearch] = useState('');
 	const [error, setError] = useState('');
 	const [waktuData, setWaktuData] = useState('baru');
+	const [berhasilVerif, setBerhasilVerif] = useState('');
 	const nextPage = userDatas.next;
 	const prevPage = userDatas.previous;
 	const router = useRouter();
@@ -106,13 +107,31 @@ export default function UserManagementComponent() {
 					</p>
 					<button
 						className="bg-[#94D60A] w-full rounded-md text-white mt-10"
-						onClick={(e) => verifyPenukaran(modal.code)}
+						onClick={(e) => {
+							setBerhasilVerif('berhasil'),
+								verifyPenukaran(modal.code),
+								setModal({ name: '', code: '', produk: '', biaya: '', id: '' });
+						}}
 					>
 						Iya
 					</button>
 				</div>
 			</div>
 			{/* MODAL END  */}
+			{/* MODAL BERHASIL VERIF */}
+			<div
+				className={`berhasilVerif fixed ${
+					berhasilVerif ? '' : 'hidden'
+				} bg-[#00000040] h-screen w-full z-20 flex justify-center items-center`}
+			>
+				<div className="bg-[#F8FFE9] px-8 py-5 rounded relative">
+					<h1 className="text-[#94D60A] text-3xl">Verfikasi berhasil</h1>
+					<AiOutlineClose
+						className="absolute top-3 right-2 text-[#94D60A] text-xl cursor-pointer"
+						onClick={(e) => setBerhasilVerif('')}
+					/>
+				</div>
+			</div>
 			<h1
 				className={`${
 					error == 'error' ? '' : 'hidden'
